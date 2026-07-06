@@ -1,0 +1,23 @@
+name: Validate catalog
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'catalog.json'
+      - '.github/workflows/validate-catalog.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate catalog.json syntax
+        run: python -m json.tool catalog.json > /dev/null
+
+      - name: Validate catalog structure and manifest URLs
+        run: python .github/scripts/validate_catalog.py

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "author": "YourName",
+  "mods": [
+    {
+      "id": "MyMod",
+      "name": "My Mod",
+      "description": "Short description shown in Explore.",
+      "version": "1.0.0",
+      "package": "https://example.com/MyMod-1.0.0.zip",
+      "modPortal": "https://github.com/YourName/MyMod",
+      "dependencies": "MBM.ModAPI",
+      "gameVersion": "2.1.2",
+      "changelog": "https://raw.githubusercontent.com/YourName/MyMod/main/CHANGELOG.md",
+      "icon": "https://raw.githubusercontent.com/YourName/MyMod/main/icon.png",
+      "categories": ["Gameplay", "QoL"],
+      "tags": ["Breeding"],
+      "downloads": 0,
+      "updated": "06.07.2026"
+    }
+  ]
+}
