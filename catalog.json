@@ -1,6 +1,6 @@
 {
   "version": 1,
   "manifests": [
-    "authors/mbm-team.json"
+    "https://raw.githubusercontent.com/AuthorName/ModRepo/main/manifest.json"
   ]
 }
