@@ -1,61 +1,63 @@
-# Как добавить мод в каталог
+# How to add a mod to the catalog
 
-Каталог **MBM.ModsCatalog** содержит только ссылки. Описание, версия, архив и changelog хранятся в **вашем** репозитории в `manifest.json`.
+**English** | [Русский](CONTRIBUTING.ru.md)
 
-## 1. Подготовьте репозиторий мода
+The **MBM.ModsCatalog** repository contains links only. Description, version, archive, and changelog live in **your** repository's `manifest.json`.
 
-Создайте `manifest.json` в своём репозитории. Образец — [manifest.example.json](manifest.example.json).
+## 1. Prepare your mod repository
 
-### Обязательные поля мода
+Create `manifest.json` in your repository. See [manifest.example.json](manifest.example.json).
 
-| Поле | Описание |
-|------|----------|
-| `id` | Имя DLL без расширения (например `MyMod`) |
-| `name` | Отображаемое название |
-| `version` | Версия мода |
-| `package` | Прямая HTTPS-ссылка на `.zip` или `.rar` |
+### Required mod fields
 
-### Рекомендуемые поля
+| Field | Description |
+|-------|-------------|
+| `id` | DLL file name without extension (e.g. `MyMod`) |
+| `name` | Display name |
+| `version` | Mod version |
+| `package` | Direct HTTPS link to a `.zip` or `.rar` archive |
 
-| Поле | Описание |
-|------|----------|
-| `description` | Текст во вкладке Explore |
-| `updated` | Дата обновления: **`dd.MM.yyyy`** (например `15.06.2026`) |
-| `downloads` | Счётчик загрузок (число) |
-| `modPortal` | Страница мода |
-| `changelog` | Raw URL на `CHANGELOG.md` |
-| `icon` | URL на PNG (до 512×512) |
-| `categories` | Категории (ID на английском, см. ниже) |
-| `tags` | Теги (ID на английском, см. ниже) |
+### Recommended fields
 
-### Категории (`categories`)
+| Field | Description |
+|-------|-------------|
+| `description` | Text shown in the Explore tab |
+| `updated` | Update date: **`dd.MM.yyyy`** (e.g. `15.06.2026`) |
+| `downloads` | Download counter (number) |
+| `modPortal` | Mod page URL |
+| `changelog` | Raw URL to `CHANGELOG.md` |
+| `icon` | PNG URL (up to 512×512) |
+| `categories` | Category IDs in English (see below) |
+| `tags` | Tag IDs in English (see below) |
+
+### Categories (`categories`)
 
 `Gameplay`, `Content`, `QoL`, `UI`, `Balance`, `Library`
 
-### Теги (`tags`)
+### Tags (`tags`)
 
 `Breeding`, `Economy`, `Characters`, `Patches`, `Localization`, `Compatibility`, `Cheats`
 
-### Архив мода
+### Mod archive
 
-- Поддерживаются **`.zip`** и **`.rar`**.
-- Если в архиве есть папка `Mods/` с файлами — они будут установлены прямо в `Mods` игры.
-- Поле `package` должно вести на **прямую** ссылку на скачивание файла.
+- **`.zip`** and **`.rar`** are supported.
+- If the archive contains a `Mods/` folder, files are installed directly into the game's `Mods` folder.
+- The `package` field must be a **direct** download link.
 
-### Raw URL манифеста
+### Raw manifest URL
 
-Ссылка должна открывать JSON в браузере без HTML-страницы.
+The link must return JSON in the browser (not an HTML page).
 
-Примеры:
+Examples:
 
 - **GitHub:** `https://raw.githubusercontent.com/User/Repo/refs/heads/main/manifest.json`
 - **GitVerse:** `https://gitverse.ru/api/repos/User/Repo/raw/branch/Branch/manifest.json`
 
-## 2. Добавьте ссылку в каталог
+## 2. Add a link to the catalog
 
-1. Нажмите **Fork** репозитория [MBM.ModsCatalog](https://github.com/Tzigan/MBM.ModsCatalog).
-2. В своём форке откройте `catalog.json`.
-3. Добавьте **одну строку** в массив `manifests` — raw URL вашего `manifest.json`.
+1. **Fork** [MBM.ModsCatalog](https://github.com/Tzigan/MBM.ModsCatalog).
+2. In your fork, open `catalog.json`.
+3. Add **one line** to the `manifests` array — the raw URL of your `manifest.json`.
 
 ```json
 {
@@ -67,34 +69,34 @@
 }
 ```
 
-**Важно:** между URL нужна **запятая**. После последнего элемента запятой нет.
+**Important:** URLs must be separated by a **comma**. No trailing comma after the last entry.
 
-4. Закоммитьте и откройте **Pull Request** в ветку `main`.
+4. Commit and open a **Pull Request** to `main`.
 
 ## 3. Pull Request
 
-При создании PR заполните шаблон: ID мода, ссылки, чеклист.
+Fill in the PR template: mod ID, links, checklist.
 
-Автоматическая проверка (CI):
+Automated checks (CI):
 
-- валидный JSON в `catalog.json`;
-- все URL — `https://`;
-- манифесты открываются и содержат хотя бы один мод с `id` и `package`.
+- valid JSON in `catalog.json`;
+- all URLs use `https://`;
+- manifests are reachable and contain at least one mod with `id` and `package`.
 
-## 4. Ревью и слияние
+## 4. Review and merge
 
-Владелец каталога проверяет PR и **сам выполняет Merge** после одобрения.  
-Прямой push в `main` для сторонних авторов недоступен.
+The catalog owner reviews the PR and **merges** after approval.  
+External authors cannot push directly to `main`.
 
-## Частые ошибки
+## Common mistakes
 
-| Ошибка | Решение |
-|--------|---------|
-| `unexpected character` в JSON | Пропущена запятая между URL в `manifests` |
-| Мод не виден в Explore | Неверный raw URL или манифест без `package` |
-| Сортировка по дате не работает | Поле `updated` не в формате `dd.MM.yyyy` |
-| Фильтры не срабатывают | `categories` / `tags` — только ID из списка выше (англ.) |
+| Issue | Fix |
+|-------|-----|
+| `unexpected character` in JSON | Missing comma between URLs in `manifests` |
+| Mod not visible in Explore | Invalid raw URL or manifest without `package` |
+| Date sort does not work | `updated` is not in `dd.MM.yyyy` format |
+| Filters do not match | `categories` / `tags` must use English IDs from the list above |
 
-## Вопросы
+## Questions
 
-Откройте [Issue](https://github.com/Tzigan/MBM.ModsCatalog/issues) в этом репозитории.
+Open an [Issue](https://github.com/Tzigan/MBM.ModsCatalog/issues) in this repository.

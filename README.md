@@ -1,29 +1,31 @@
 # MBM.ModsCatalog
 
-Корневой каталог модов для [MBM.ModLoader](https://github.com/Tzigan/MBM.ModLoader).  
-Игра во вкладке **Explore** загружает этот репозиторий и по ссылкам из `catalog.json` подтягивает `manifest.json` авторов.
+**English** | [Русский](README.ru.md)
 
-**Этот репозиторий не хранит файлы модов** — только список URL на манифесты в репозиториях авторов.
+Root mod catalog for [MBM.ModLoader](https://github.com/Tzigan/MBM.ModLoader).  
+The in-game **Explore** tab loads this repository and fetches each author's `manifest.json` from URLs listed in `catalog.json`.
 
-## Файлы
+**This repository does not host mod files** — only URLs to manifests in author repositories.
 
-| Файл | Назначение |
-|------|------------|
-| `catalog.json` | Список raw-URL на `manifest.json` авторов |
-| `manifest.example.json` | Пример манифеста в репозитории мода |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Как добавить мод через Pull Request |
+## Files
 
-## Добавить мод
+| File | Purpose |
+|------|---------|
+| `catalog.json` | List of raw URLs to author `manifest.json` files |
+| `manifest.example.json` | Example manifest for your mod repository |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to add a mod via Pull Request |
 
-1. Разместите `manifest.json` в **своём** репозитории (см. `manifest.example.json`).
-2. Сделайте **Fork** этого репозитория.
-3. Добавьте raw-URL в `manifest.json` → `manifests[]`.
-4. Откройте **Pull Request** в `main`.
-5. Дождитесь проверки и одобрения владельца каталога.
+## Add a mod
 
-Подробности — в [CONTRIBUTING.md](CONTRIBUTING.md).
+1. Host `manifest.json` in **your** repository (see `manifest.example.json`).
+2. **Fork** this repository.
+3. Add your raw URL to `catalog.json` → `manifests[]`.
+4. Open a **Pull Request** to `main`.
+5. Wait for review and approval by the catalog owner.
 
-## URL для ModLoader
+Details — [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## ModLoader URL
 
 ```
 https://raw.githubusercontent.com/Tzigan/MBM.ModsCatalog/refs/heads/main/catalog.json
