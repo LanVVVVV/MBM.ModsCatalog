@@ -12,7 +12,7 @@
 - [ ] `updated` is in `dd.MM.yyyy` format (e.g. `15.06.2026`) / указан в формате `dd.MM.yyyy`
 - [ ] `id` matches the mod `.dll` file name / совпадает с именем `.dll`
 - [ ] Only **one** new URL added to `manifests[]` in `catalog.json` / добавлена только одна ссылка
-- [ ] Categories and tags use English IDs from [CONTRIBUTING.md](../CONTRIBUTING.md) / категории и теги — ID на английском
+- [ ] Categories and tags use English IDs from [Documentation/CONTRIBUTING.md](../Documentation/CONTRIBUTING.md) / категории и теги — ID на английском
 
 ## For reviewer / Для ревьюера
 

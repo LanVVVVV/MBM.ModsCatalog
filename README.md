@@ -1,32 +1,30 @@
 # MBM.ModsCatalog
 
-**English** | [Русский](README.ru.md)
+**English** | [Русский](Documentation/README.ru.md)
 
 Root mod catalog for [MBM.ModLoader](https://github.com/Tzigan/MBM.ModLoader).  
-The in-game **Explore** tab loads this repository and fetches each author's `manifest.json` from URLs listed in `catalog.json`.
+The in-game **Explore** tab loads this repository and fetches author `manifest.json` files from URLs in `catalog.json`.
 
-**This repository does not host mod files** — only URLs to manifests in author repositories.
+**This repository does not host mod files** — only links to manifests in author repositories.
 
-## Files
+## Quick start
 
-| File | Purpose |
-|------|---------|
-| `catalog.json` | List of raw URLs to author `manifest.json` files |
-| `manifest.example.json` | Example manifest for your mod repository |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | How to add a mod via Pull Request |
+1. Host `manifest.json` in your mod repository — see [manifest.example.json](Documentation/manifest.example.json).
+2. **Fork** this repo → add your manifest raw URL to `catalog.json` → open a **Pull Request**.
 
-## Add a mod
-
-1. Host `manifest.json` in **your** repository (see `manifest.example.json`).
-2. **Fork** this repository.
-3. Add your raw URL to `catalog.json` → `manifests[]`.
-4. Open a **Pull Request** to `main`.
-5. Wait for review and approval by the catalog owner.
-
-Details — [CONTRIBUTING.md](CONTRIBUTING.md).
+Full guide: [Documentation/CONTRIBUTING.md](Documentation/CONTRIBUTING.md) | [RU](Documentation/CONTRIBUTING.ru.md)
 
 ## ModLoader URL
 
 ```
 https://raw.githubusercontent.com/Tzigan/MBM.ModsCatalog/refs/heads/main/catalog.json
 ```
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Documentation/CONTRIBUTING.md](Documentation/CONTRIBUTING.md) | How to add a mod (EN) |
+| [Documentation/CONTRIBUTING.ru.md](Documentation/CONTRIBUTING.ru.md) | Как добавить мод (RU) |
+| [Documentation/manifest.example.json](Documentation/manifest.example.json) | Example author manifest |
+| [Documentation/README.ru.md](Documentation/README.ru.md) | Описание репозитория (RU) |
