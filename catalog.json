@@ -2,6 +2,8 @@
   "version": 1,
   "manifests": [
     "https://gitverse.ru/api/repos/Tsygan/ComplexBreedingRedux/raw/branch/Release/manifest.json",
-    "https://gitverse.ru/api/repos/Tsygan/TimeScaleOptimizer/raw/branch/master/manifest.json"
+    "https://gitverse.ru/api/repos/Tsygan/TimeScaleOptimizer/raw/branch/master/manifest.json",
+    "https://raw.githubusercontent.com/LanVVVVV/MoreGraphicAttachments/master/manifest.json",
+    "https://raw.githubusercontent.com/LanVVVVV/SystemExtensionLib/master/manifest.json"
   ]
 }
