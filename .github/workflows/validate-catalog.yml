@@ -6,6 +6,7 @@ on:
     paths:
       - 'catalog.json'
       - '.github/workflows/validate-catalog.yml'
+      - '.github/scripts/validate_catalog.py'
 
 permissions:
   contents: read
@@ -15,9 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      # PR forks may ship an older validator; always use the trusted copy from the base branch.
+      - name: Use validator script from base branch
+        if: github.event_name == 'pull_request'
+        run: git fetch --no-tags --depth=1 origin "${{ github.base_ref }}" && git checkout "origin/${{ github.base_ref }}" -- .github/scripts/validate_catalog.py
 
       - name: Validate catalog.json syntax
-        run: python -m json.tool catalog.json > /dev/null
+        run: python -c "import json; json.load(open('catalog.json', encoding='utf-8-sig'))"
 
       - name: Validate catalog structure and manifest URLs
         run: python .github/scripts/validate_catalog.py
