@@ -21,7 +21,7 @@ def warn(message: str) -> None:
 
 def main() -> None:
     try:
-        with open("catalog.json", encoding="utf-8") as f:
+        with open("catalog.json", encoding="utf-8-sig") as f:
             data = json.load(f)
     except (OSError, json.JSONDecodeError) as ex:
         fail(f"catalog.json is not valid JSON: {ex}")
@@ -61,7 +61,7 @@ def main() -> None:
             fail(f"cannot fetch manifest URL: {url} — {ex.reason}")
 
         try:
-            manifest = json.loads(body.decode("utf-8"))
+            manifest = json.loads(body.decode("utf-8-sig"))
         except (UnicodeDecodeError, json.JSONDecodeError) as ex:
             fail(f"author manifest is not valid JSON: {url} — {ex}")
 
