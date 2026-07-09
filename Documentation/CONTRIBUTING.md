@@ -23,7 +23,6 @@ Create `manifest.json` in your repository. See [manifest.example.json](manifest.
 |-------|-------------|
 | `description` | Text shown in the Explore tab |
 | `updated` | Update date: **`dd.MM.yyyy`** (e.g. `15.06.2026`) |
-| `downloads` | Download counter (number) |
 | `modPortal` | Mod page URL |
 | `changelog` | Raw URL to `CHANGELOG.md` |
 | `icon` | PNG URL (up to 512×512) |
@@ -43,6 +42,15 @@ Create `manifest.json` in your repository. See [manifest.example.json](manifest.
 - **`.zip`** and **`.rar`** are supported.
 - If the archive contains a `Mods/` folder, files are installed directly into the game's `Mods` folder.
 - The `package` field must be a **direct** download link.
+
+### Install statistics
+
+Download counts are maintained centrally in [`stats.json`](../stats.json) in this repository.
+
+- **Do not** add `downloads` to your author `manifest.json` — MBM.ModLoader reports installs automatically and reads counts from `stats.json`.
+- Optional root `catalog.json` fields:
+  - `statsUrl` — override URL for `stats.json` (default: this repo)
+  - `statsReportUrl` — HTTPS endpoint for install reports (see [`tools/stats-relay`](../tools/stats-relay))
 
 ### Raw manifest URL
 

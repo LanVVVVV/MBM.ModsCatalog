@@ -2,6 +2,7 @@
 """CI checks for MBM.ModsCatalog pull requests."""
 
 import json
+import os
 import sys
 import urllib.error
 import urllib.request
@@ -79,6 +80,26 @@ def main() -> None:
                 fail(f"mods[{mod_index}] missing package or dll in {url}")
 
     print(f"OK: {len(manifests)} manifest URL(s) validated")
+
+    if os.path.isfile("stats.json"):
+        try:
+            with open("stats.json", encoding="utf-8-sig") as f:
+                stats = json.load(f)
+        except (OSError, json.JSONDecodeError) as ex:
+            fail(f"stats.json is not valid JSON: {ex}")
+
+        if stats.get("version") != 1:
+            warn('stats.json: expected "version": 1')
+
+        mods = stats.get("mods")
+        if not isinstance(mods, dict):
+            fail('stats.json must contain a "mods" object')
+
+        for mod_id, count in mods.items():
+            if not isinstance(mod_id, str) or not mod_id.strip():
+                fail("stats.json mods keys must be non-empty strings")
+            if not isinstance(count, (int, float)) or count < 0:
+                fail(f"stats.json invalid count for {mod_id!r}")
 
 
 if __name__ == "__main__":
