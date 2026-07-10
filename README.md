@@ -7,7 +7,7 @@ The in-game **Explore** tab loads this repository and fetches author `manifest.j
 
 **This repository does not host mod files** — only links to manifests in author repositories.
 
-Install/download counts are stored in [`stats.json`](stats.json) and updated automatically when players install mods from Explore (see [`tools/stats-relay`](tools/stats-relay)).
+Install/download counts are stored in [`stats.json`](stats.json) on the **`stats`** branch (updated by GitHub Actions; `main` is PR-only).
 
 ## Quick start
 

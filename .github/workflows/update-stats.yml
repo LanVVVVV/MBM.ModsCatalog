@@ -18,12 +18,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Bump install counter
+      - name: Bump install counter on stats branch
         env:
           MOD_ID: ${{ github.event.inputs.modId || github.event.client_payload.modId }}
-        run: python .github/scripts/bump_stats.py "$MOD_ID"
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore(stats): bump ${{ github.event.inputs.modId || github.event.client_payload.modId }}"
+          if git ls-remote --exit-code --heads origin stats >/dev/null 2>&1; then
+            git checkout stats
+            git pull --ff-only origin stats
+          else
+            git checkout -b stats
+            if git show origin/main:stats.json >/dev/null 2>&1; then
+              git show origin/main:stats.json > stats.json
+            else
+              printf '%s\n' '{"version":1,"mods":{}}' > stats.json
+            fi
+          fi
+
+          python .github/scripts/bump_stats.py "$MOD_ID"
+          git add stats.json
+
+          if git diff --staged --quiet; then
+            echo "No stats change"
+            exit 0
+          fi
+
+          git commit -m "chore(stats): bump $MOD_ID"
+          git push origin HEAD:stats

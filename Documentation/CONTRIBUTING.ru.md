@@ -48,8 +48,9 @@
 Счётчик загрузок ведётся централизованно в [`stats.json`](../stats.json) этого репозитория.
 
 - **Не добавляйте** поле `downloads` в авторский `manifest.json` — MBM.ModLoader сам отправляет события установки и читает счётчики из `stats.json`.
+- Счётчики обновляются в ветке **`stats`** (Actions не может пушить в защищённый `main`).
 - Необязательные поля корневого `catalog.json`:
-  - `statsUrl` — URL файла `stats.json` (по умолчанию — этот репозиторий)
+  - `statsUrl` — URL файла `stats.json` (по умолчанию — ветка `stats` этого репозитория)
   - `statsReportUrl` — HTTPS-эндпоинт для отчётов об установке (см. [`tools/stats-relay`](../tools/stats-relay))
 
 ### Raw URL манифеста
