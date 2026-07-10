@@ -1,11 +1,13 @@
-# Install stats relay
+# Install stats relay (Cloudflare Workers)
+
+> **Russia:** Cloudflare (including `*.workers.dev`) is often blocked. Use [stats-relay-vps](../stats-relay-vps/) on a Russian/EU VPS, or bump counters manually via **Actions → Update install stats → Run workflow**.
 
 MBM.ModLoader reports Explore installs with an anonymous `POST` request. The game client cannot hold a GitHub token, so a small relay triggers `repository_dispatch` on **MBM.ModsCatalog**.
 
 ## Flow
 
 1. Loader `POST`s `{ "modId": "MyMod", "version": "1.0.0" }` to `statsReportUrl` from `catalog.json`.
-2. This worker calls GitHub `repository_dispatch` (`mod_install`).
+2. Relay calls GitHub `repository_dispatch` (`mod_install`).
 3. Workflow [`.github/workflows/update-stats.yml`](../../.github/workflows/update-stats.yml) bumps `stats.json`.
 4. Loader reads `stats.json` on the next catalog refresh.
 
@@ -29,4 +31,12 @@ MBM.ModLoader reports Explore installs with an anonymous `POST` request. The gam
 
 Optional `statsUrl` overrides the default raw URL of `stats.json` in this repository.
 
-Until `statsReportUrl` is set, install counts stay at `0` and only manual edits to `stats.json` change them.
+Until `statsReportUrl` is set, install counts stay at `0` unless you edit `stats.json` or run the workflow manually.
+
+## Alternatives
+
+| Option | When |
+|--------|------|
+| [stats-relay-vps](../stats-relay-vps/) | VPS in Russia/EU, nginx + HTTPS |
+| **GitHub Actions → Run workflow** | Manual bumps, no relay |
+| Edit `stats.json` directly | Testing / rare mods |

@@ -3,6 +3,12 @@ name: Update install stats
 on:
   repository_dispatch:
     types: [mod_install]
+  workflow_dispatch:
+    inputs:
+      modId:
+        description: Mod id (DLL name without extension)
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -15,9 +21,9 @@ jobs:
 
       - name: Bump install counter
         env:
-          MOD_ID: ${{ github.event.client_payload.modId }}
+          MOD_ID: ${{ github.event.inputs.modId || github.event.client_payload.modId }}
         run: python .github/scripts/bump_stats.py "$MOD_ID"
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore(stats): bump ${{ github.event.client_payload.modId }}"
+          commit_message: "chore(stats): bump ${{ github.event.inputs.modId || github.event.client_payload.modId }}"

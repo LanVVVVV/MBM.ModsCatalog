@@ -1,0 +1,14 @@
+[Unit]
+Description=MBM ModsCatalog install stats relay
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/mbm-stats-relay
+EnvironmentFile=/etc/mbm-stats-relay.env
+ExecStart=/usr/bin/python3 /opt/mbm-stats-relay/relay.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
