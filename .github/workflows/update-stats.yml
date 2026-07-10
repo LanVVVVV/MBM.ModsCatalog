@@ -20,6 +20,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: true
 
       - name: Bump install counter on stats branch
         env:
@@ -38,15 +39,24 @@ jobs:
 
           python .github/scripts/bump_stats.py "$MOD_ID"
 
-          workdir="$(mktemp -d)"
-          cp stats.json "$workdir/stats.json"
-          cd "$workdir"
-          git init -q
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add stats.json
-          git commit -q -m "chore(stats): bump $MOD_ID"
-          git branch -M stats
-          git push -q -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" stats
+          stats_dir="$(mktemp -d)"
+          git fetch origin stats
+          git worktree add -B stats "$stats_dir" origin/stats
 
+          cp stats.json "$stats_dir/stats.json"
+          cd "$stats_dir"
+          git add stats.json
+
+          if git diff --staged --quiet; then
+            echo "No stats change"
+            cd "$GITHUB_WORKSPACE"
+            git worktree remove "$stats_dir" --force
+            exit 0
+          fi
+
+          git commit -m "chore(stats): bump $MOD_ID"
+          git push origin stats
+
+          cd "$GITHUB_WORKSPACE"
+          git worktree remove "$stats_dir" --force
           echo "Pushed stats-only branch for $MOD_ID"
