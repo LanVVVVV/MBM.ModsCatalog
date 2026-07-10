@@ -32,8 +32,6 @@ jobs:
           if git ls-remote --exit-code --heads origin stats >/dev/null 2>&1; then
             git fetch origin stats
             git show origin/stats:stats.json > stats.json
-          elif git show origin/main:stats.json >/dev/null 2>&1; then
-            git show origin/main:stats.json > stats.json
           else
             printf '%s\n' '{"version":1,"mods":{}}' > stats.json
           fi
