@@ -1,7 +1,6 @@
 {
   "version": 1,
   "statsReportUrl": "https://stats.temsar.ru/install",
-  "statsUrl": "https://stats.temsar.ru/stats",
   "manifests": [
     "https://gitverse.ru/api/repos/Tsygan/ComplexBreedingRedux/raw/branch/Release/manifest.json",
     "https://gitverse.ru/api/repos/Tsygan/TimeScaleOptimizer/raw/branch/master/manifest.json",

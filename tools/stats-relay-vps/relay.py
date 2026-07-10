@@ -5,9 +5,6 @@ Minimal install-stats relay for a VPS (stdlib only, no pip packages).
 POST /install  {"modId": "MyMod", "version": "1.0.0"}
   -> GitHub repository_dispatch(mod_install) on MBM.ModsCatalog
 
-GET /stats
-  -> fresh stats.json from GitHub API (no raw CDN cache)
-
 Environment:
   GITHUB_OWNER   e.g. Tzigan
   GITHUB_REPO    e.g. MBM.ModsCatalog
@@ -26,8 +23,6 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 MOD_ID_RE = re.compile(r"^[A-Za-z0-9._-]+$")
-STATS_REF = os.environ.get("GITHUB_STATS_REF", "stats").strip() or "stats"
-STATS_PATH = os.environ.get("GITHUB_STATS_PATH", "stats.json").strip() or "stats.json"
 
 
 def clean_env(name: str) -> str:
@@ -74,50 +69,8 @@ def dispatch_install(mod_id: str, version: str) -> None:
             raise RuntimeError(f"dispatch HTTP {response.status}")
 
 
-def fetch_stats_json() -> bytes:
-    owner = clean_env("GITHUB_OWNER")
-    repo = clean_env("GITHUB_REPO")
-    token = clean_env("GITHUB_TOKEN")
-
-    request = Request(
-        f"https://api.github.com/repos/{owner}/{repo}/contents/{STATS_PATH}?ref={STATS_REF}",
-        method="GET",
-        headers={
-            "Authorization": f"Bearer {token}",
-            "Accept": "application/vnd.github.raw+json",
-            "User-Agent": "MBM-Stats-Relay-VPS",
-            "X-GitHub-API-Version": "2022-11-28",
-        },
-    )
-
-    with urlopen(request, timeout=30) as response:
-        if response.status != 200:
-            raise RuntimeError(f"stats HTTP {response.status}")
-        return response.read()
-
-
 class RelayHandler(BaseHTTPRequestHandler):
-    server_version = "MBM-Stats-Relay-VPS/1.1"
-
-    def do_GET(self) -> None:
-        if self.path not in ("/stats", "/stats.json"):
-            self.send_error(404, "not found")
-            return
-
-        try:
-            payload = fetch_stats_json()
-        except (HTTPError, URLError, RuntimeError, KeyError, ValueError, UnicodeEncodeError) as ex:
-            print(f"stats fetch failed: {ex}", file=sys.stderr)
-            self.send_error(502, "stats fetch failed")
-            return
-
-        self.send_response(200)
-        self.send_header("Content-Type", "application/json; charset=utf-8")
-        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate")
-        self.send_header("Pragma", "no-cache")
-        self.send_header("Content-Length", str(len(payload)))
-        self.end_headers()
-        self.wfile.write(payload)
+    server_version = "MBM-Stats-Relay-VPS/1.0"
 
     def do_POST(self) -> None:
         if self.path not in ("/install", "/"):
