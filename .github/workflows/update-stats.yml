@@ -30,24 +30,25 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           if git ls-remote --exit-code --heads origin stats >/dev/null 2>&1; then
-            git checkout stats
-            git pull --ff-only origin stats
+            git fetch origin stats
+            git show origin/stats:stats.json > stats.json
+          elif git show origin/main:stats.json >/dev/null 2>&1; then
+            git show origin/main:stats.json > stats.json
           else
-            git checkout -b stats
-            if git show origin/main:stats.json >/dev/null 2>&1; then
-              git show origin/main:stats.json > stats.json
-            else
-              printf '%s\n' '{"version":1,"mods":{}}' > stats.json
-            fi
+            printf '%s\n' '{"version":1,"mods":{}}' > stats.json
           fi
 
           python .github/scripts/bump_stats.py "$MOD_ID"
+
+          workdir="$(mktemp -d)"
+          cp stats.json "$workdir/stats.json"
+          cd "$workdir"
+          git init -q
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add stats.json
+          git commit -q -m "chore(stats): bump $MOD_ID"
+          git branch -M stats
+          git push -q -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" stats
 
-          if git diff --staged --quiet; then
-            echo "No stats change"
-            exit 0
-          fi
-
-          git commit -m "chore(stats): bump $MOD_ID"
-          git push origin HEAD:stats
+          echo "Pushed stats-only branch for $MOD_ID"

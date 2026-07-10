@@ -48,7 +48,7 @@ Create `manifest.json` in your repository. See [manifest.example.json](manifest.
 Download counts are maintained centrally in [`stats.json`](../stats.json) in this repository.
 
 - **Do not** add `downloads` to your author `manifest.json` — MBM.ModLoader reports installs automatically and reads counts from `stats.json`.
-- Install counters are updated on the **`stats`** branch (GitHub Actions cannot push to protected `main`).
+- Install counters are updated on the **`stats`** branch (GitHub Actions cannot push to protected `main`). That branch contains **only** `stats.json`.
 - Optional root `catalog.json` fields:
   - `statsUrl` — override URL for `stats.json` (default: `stats` branch in this repo)
   - `statsReportUrl` — HTTPS endpoint for install reports (see [`tools/stats-relay`](../tools/stats-relay))
